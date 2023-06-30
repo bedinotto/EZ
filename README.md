@@ -4,6 +4,11 @@ This is a project of compiler for a simple language called EZ. The compiler is w
 
 This project is part of the course "Compilers" at the Universidade Federal do Pampa, Brazil.
 
+This project is developed by:
+
+- Felipe Bedinotto Fava
+- Lucas Santos Oliveira
+
 This project follows the book "Como Construir um Compilador Utilizando Ferramentas Java" by Marcio Delamaro.
 
 ## How to run
@@ -11,6 +16,9 @@ This project follows the book "Como Construir um Compilador Utilizando Ferrament
 ### Prerequisites
 
 - JavaCC
+
+```$ sudo apt install javacc```
+```$ brew install javacc```
 
 ### Compile
 
