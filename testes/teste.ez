@@ -1,0 +1,23 @@
+
+class teste {
+    class data {
+        int dia, mes, ano;
+
+        constructor(int d, int m, int a){
+            dia = d;
+            mes = m;
+            ano = a;
+        }
+
+        int compara(data x){
+            if ( ano < x.ano) return -1;
+            if ( ano > x.ano) return 1;
+            if ( mes < x.mes) return -1;
+            if ( mes > x.mes) return 1;
+            if ( dia < x.dia) return -1;
+            if ( dia > x.dia) return 1;
+            return 0;
+        }
+    }
+}
+
