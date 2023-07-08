@@ -81,4 +81,25 @@ public EntryMethod methodFindInclass(String x, EntryRec r) {
         }
         return null; //não achou
     }
+
+public EntryVar varFind(String x, int n){
+    EntryTable p = top;
+    EntryClass q;
+
+    while(p != null) {
+            //verifica se tipo é EntryMethod e compara o nome
+            if(p instanceof EntryVar && p.name.equals(x))
+                if(--n == 0)
+                    return (EntryVar) p;
+            p = p.next;
+
+    }
+    q = levelup;
+    if(q.parent == null) return null;
+    return q.parent.nested.varFind(x, n);
+}
+
+public EntryVar varFind(String x){
+    return varFind(x, 1);
+}
 }

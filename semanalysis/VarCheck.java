@@ -31,7 +31,7 @@ public class VarCheck extends ClassCheck {
             foundSemanticError++; 
         }
         VarCheckClassDeclListNode(x.next);
-}
+    }
 
     public void VarCheckClassDeclNode(ClassDeclNode x) throws SemanticException {
         Symtable temphold = Curtable; // salva tabela corrente

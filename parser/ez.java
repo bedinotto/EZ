@@ -82,9 +82,9 @@ public class ez implements ezConstants {
                 PrintTree pt = new PrintTree();
                 pt.printRoot(root);
             }
-            VarCheck tc = new VarCheck();
+            TypeCheck tc = new TypeCheck();
             try{
-                tc.VarCheckRoot(root);
+                tc.TypeCheckRoot(root);
                 System.out.println("0 Semantic error found");
             }
             catch(SemanticException e){
