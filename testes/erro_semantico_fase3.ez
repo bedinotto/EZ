@@ -1,0 +1,28 @@
+class TesteFase3 {
+    class Data {
+        int dia;
+        int mes;
+        int ano;
+
+        constructor() {
+            dia = 10;
+            mes = 10;
+            ano = 2010;
+        }
+    
+        constructor(int dia2, int mes2, int ano2) {
+            this.dia = dia2;
+            this.mes = mes2;
+            this.ano = ano2;
+        }
+
+        int getDia() {
+            return this.dia;
+        }
+
+        // error method does not return int
+        int getMes() {
+            return;
+        }
+    }
+}

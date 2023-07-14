@@ -1,948 +1,945 @@
 package syntacticTree;
 
-import parser.*;
-
-
 public class PrintTree {
     int kk;
 
     public PrintTree() {
-        kk = 1; // inicializa contador de n?s
+        kk = 1; 
     }
 
-    public void printRoot(ListNode x) {
-        if (x == null) {
+    public void printRoot(ListNode node) {
+        if (node == null) {
             System.out.println("Empty syntatic tree. Nothing to be printed");
         } else {
-            numberClassDeclListNode(x);
-            printClassDeclListNode(x);
+            numberClassDeclListNode(node);
+            printClassDeclListNode(node);
         }
 
         System.out.println();
     }
 
-    // ------------- lista de classes --------------------------
-    public void numberClassDeclListNode(ListNode x) {
-        if (x == null) {
+    
+    public void numberClassDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberClassDeclNode((ClassDeclNode) x.node);
-        numberClassDeclListNode(x.next);
+        node.number = kk++;
+        numberClassDeclNode((ClassDeclNode) node.node);
+        numberClassDeclListNode(node.next);
     }
 
-    public void printClassDeclListNode(ListNode x) {
-        if (x == null) {
+    public void printClassDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ListNode (ClassDeclNode)  ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
+        System.out.print(node.number + ": ListNode (ClassDeclNode)  ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
 
-        printClassDeclNode((ClassDeclNode) x.node);
-        printClassDeclListNode(x.next);
+        printClassDeclNode((ClassDeclNode) node.node);
+        printClassDeclListNode(node.next);
     }
 
-    // ------------- declarac?o de classe -------------------------
-    public void numberClassDeclNode(ClassDeclNode x) {
-        if (x == null) {
+    
+    public void numberClassDeclNode(ClassDeclNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberClassBodyNode(x.body);
+        node.number = kk++;
+        numberClassBodyNode(node.body);
     }
 
-    public void printClassDeclNode(ClassDeclNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": ClassDeclNode ===> " + x.name.image +
-            " " + ((x.supername == null) ? "null" : x.supername.image) + " " +
-            ((x.body == null) ? "null" : String.valueOf(x.body.number)));
-
-        printClassBodyNode(x.body);
-    }
-
-    //------------------------- Corpo da classe -------------------
-    public void numberClassBodyNode(ClassBodyNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberClassDeclListNode(x.clist);
-        numberVarDeclListNode(x.vlist);
-        numberConstructDeclListNode(x.ctlist);
-        numberMethodDeclListNode(x.mlist);
-    }
-
-    public void printClassBodyNode(ClassBodyNode x) {
-        if (x == null) {
+    public void printClassDeclNode(ClassDeclNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ClassBodyNode ===> " +
-            ((x.clist == null) ? "null" : String.valueOf(x.clist.number)) +
-            " " + ((x.vlist == null) ? "null" : String.valueOf(x.vlist.number)) +
+        System.out.print(node.number + ": ClassDeclNode ===> " + node.name.image +
+            " " + ((node.supername == null) ? "null" : node.supername.image) + " " +
+            ((node.body == null) ? "null" : String.valueOf(node.body.number)));
+
+        printClassBodyNode(node.body);
+    }
+
+    
+    public void numberClassBodyNode(ClassBodyNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberClassDeclListNode(node.clist);
+        numberVarDeclListNode(node.vlist);
+        numberConstructDeclListNode(node.ctlist);
+        numberMethodDeclListNode(node.mlist);
+    }
+
+    public void printClassBodyNode(ClassBodyNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": ClassBodyNode ===> " +
+            ((node.clist == null) ? "null" : String.valueOf(node.clist.number)) +
+            " " + ((node.vlist == null) ? "null" : String.valueOf(node.vlist.number)) +
             " " +
-            ((x.ctlist == null) ? "null" : String.valueOf(x.ctlist.number)) +
-            " " + ((x.mlist == null) ? "null" : String.valueOf(x.mlist.number)));
+            ((node.ctlist == null) ? "null" : String.valueOf(node.ctlist.number)) +
+            " " + ((node.mlist == null) ? "null" : String.valueOf(node.mlist.number)));
 
-        printClassDeclListNode(x.clist);
-        printVarDeclListNode(x.vlist);
-        printConstructDeclListNode(x.ctlist);
-        printMethodDeclListNode(x.mlist);
+        printClassDeclListNode(node.clist);
+        printVarDeclListNode(node.vlist);
+        printConstructDeclListNode(node.ctlist);
+        printMethodDeclListNode(node.mlist);
     }
 
-    // ---------------- Lista de declarac?es de vari?veis ---------------- 
-    public void numberVarDeclListNode(ListNode x) {
-        if (x == null) {
+    
+    public void numberVarDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberVarDeclNode((VarDeclNode) x.node);
-        numberVarDeclListNode(x.next);
+        node.number = kk++;
+        numberVarDeclNode((VarDeclNode) node.node);
+        numberVarDeclListNode(node.next);
     }
 
-    public void printVarDeclListNode(ListNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": ListNode (VarDeclNode) ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
-
-        printVarDeclNode((VarDeclNode) x.node);
-        printVarDeclListNode(x.next);
-    }
-
-    // -------------------- Declarac?o de vari?vel --------------------
-    public void numberVarDeclNode(VarDeclNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numbervarListNode(x.vars);
-    }
-
-    public void printVarDeclNode(VarDeclNode x) {
-        if (x == null) {
+    public void printVarDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": VarDeclNode ===> " + x.position.image +
-            " " + x.vars.number);
-        printvarListNode(x.vars);
+        System.out.print(node.number + ": ListNode (VarDeclNode) ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
+
+        printVarDeclNode((VarDeclNode) node.node);
+        printVarDeclListNode(node.next);
     }
 
-    // ------------------- Lista de vari?veis --------------------
-    public void numbervarListNode(ListNode x) {
-        if (x == null) {
+    
+    public void numberVarDeclNode(VarDeclNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberVarNode((VarNode) x.node);
-        numbervarListNode(x.next);
+        node.number = kk++;
+        numbervarListNode(node.vars);
     }
 
-    public void printvarListNode(ListNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": ListNode (VarNode) ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
-
-        printVarNode((VarNode) x.node);
-        printvarListNode(x.next);
-    }
-
-    // -------------- Lista de construtores ---------------------
-    public void numberConstructDeclListNode(ListNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberConstructDeclNode((ConstructDeclNode) x.node);
-        numberConstructDeclListNode(x.next);
-    }
-
-    public void printConstructDeclListNode(ListNode x) {
-        if (x == null) {
+    public void printVarDeclNode(VarDeclNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ListNode (ConstructDeclNode) ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
-
-        printConstructDeclNode((ConstructDeclNode) x.node);
-        printConstructDeclListNode(x.next);
+        System.out.print(node.number + ": VarDeclNode ===> " + node.position.image +
+            " " + node.vars.number);
+        printvarListNode(node.vars);
     }
 
-    // ------------------ Declarac?o de construtor -----------------
-    public void numberConstructDeclNode(ConstructDeclNode x) {
-        if (x == null) {
+    
+    public void numbervarListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberMethodBodyNode(x.body);
+        node.number = kk++;
+        numberVarNode((VarNode) node.node);
+        numbervarListNode(node.next);
     }
 
-    public void printConstructDeclNode(ConstructDeclNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": ConstructDeclNode ===> " +
-            x.body.number);
-        printMethodBodyNode(x.body);
-    }
-
-    // -------------------------- Lista de m?todos -----------------
-    public void numberMethodDeclListNode(ListNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberMethodDeclNode((MethodDeclNode) x.node);
-        numberMethodDeclListNode(x.next);
-    }
-
-    public void printMethodDeclListNode(ListNode x) {
-        if (x == null) {
+    public void printvarListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ListNode (MethodDeclNode) ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
-        printMethodDeclNode((MethodDeclNode) x.node);
-        printMethodDeclListNode(x.next);
+        System.out.print(node.number + ": ListNode (VarNode) ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
+
+        printVarNode((VarNode) node.node);
+        printvarListNode(node.next);
     }
 
-    // --------------------- Declarac?o de m?todo ---------------
-    public void numberMethodDeclNode(MethodDeclNode x) {
-        if (x == null) {
+    
+    public void numberConstructDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberMethodBodyNode(x.body);
+        node.number = kk++;
+        numberConstructDeclNode((ConstructDeclNode) node.node);
+        numberConstructDeclListNode(node.next);
     }
 
-    public void printMethodDeclNode(MethodDeclNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": MethodDeclNode ===> " +
-            x.position.image + " " + ((x.dim == 0) ? "" : ("[" + x.dim + "] ")) +
-            x.name.image + " " + x.body.number);
-        printMethodBodyNode(x.body);
-    }
-
-    //-------------------------- Corpo de m?todo ----------------------
-    public void numberMethodBodyNode(MethodBodyNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberVarDeclListNode(x.param);
-        numberStatementNode(x.stat);
-    }
-
-    public void printMethodBodyNode(MethodBodyNode x) {
-        if (x == null) {
+    public void printConstructDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": MethodBodyNode ===> " +
-            ((x.param == null) ? "null" : String.valueOf(x.param.number)) +
-            " " + x.stat.number);
-        printVarDeclListNode(x.param);
-        printStatementNode(x.stat);
+        System.out.print(node.number + ": ListNode (ConstructDeclNode) ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
+
+        printConstructDeclNode((ConstructDeclNode) node.node);
+        printConstructDeclListNode(node.next);
     }
 
-    // --------------------------- Comando composto ----------------------
-    public void numberBlockNode(BlockNode x) {
-        if (x == null) {
+    
+    public void numberConstructDeclNode(ConstructDeclNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberStatementListNode(x.stats);
+        node.number = kk++;
+        numberMethodBodyNode(node.body);
     }
 
-    public void printBlockNode(BlockNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": BlockNode ===> " + x.stats.number);
-        printStatementListNode(x.stats);
-    }
-
-    // --------------------- Lista de comandos --------------------
-    public void numberStatementListNode(ListNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberStatementNode((StatementNode) x.node);
-        numberStatementListNode(x.next);
-    }
-
-    public void printStatementListNode(ListNode x) {
-        if (x == null) {
+    public void printConstructDeclNode(ConstructDeclNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ListNode (StatementNode) ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
-
-        printStatementNode((StatementNode) x.node);
-        printStatementListNode(x.next);
+        System.out.print(node.number + ": ConstructDeclNode ===> " +
+            node.body.number);
+        printMethodBodyNode(node.body);
     }
 
-    // --------------------------- Comando print ---------------------
-    public void numberPrintNode(PrintNode x) {
-        if (x == null) {
+    
+    public void numberMethodDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr);
+        node.number = kk++;
+        numberMethodDeclNode((MethodDeclNode) node.node);
+        numberMethodDeclListNode(node.next);
     }
 
-    public void printPrintNode(PrintNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": PrintNode ===> " + x.expr.number);
-        printExpreNode(x.expr);
-    }
-
-    // ---------------------- Comando read --------------------------
-    public void numberReadNode(ReadNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreNode(x.expr);
-    }
-
-    public void printReadNode(ReadNode x) {
-        if (x == null) {
+    public void printMethodDeclListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ReadNode ===> " + x.expr.number);
-        printExpreNode(x.expr);
+        System.out.print(node.number + ": ListNode (MethodDeclNode) ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
+        printMethodDeclNode((MethodDeclNode) node.node);
+        printMethodDeclListNode(node.next);
     }
 
-    // --------------------- Comando return -------------------------
-    public void numberReturnNode(ReturnNode x) {
-        if (x == null) {
+    
+    public void numberMethodDeclNode(MethodDeclNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr);
+        node.number = kk++;
+        numberMethodBodyNode(node.body);
     }
 
-    public void printReturnNode(ReturnNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": ReturnNode ===> " +
-            ((x.expr == null) ? "null" : String.valueOf(x.expr.number)));
-        printExpreNode(x.expr);
-    }
-
-    // ------------------------ Comando super --------------------------
-    public void numberSuperNode(SuperNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreListNode(x.args);
-    }
-
-    public void printSuperNode(SuperNode x) {
-        if (x == null) {
+    public void printMethodDeclNode(MethodDeclNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": SuperNode ===> " +
-            ((x.args == null) ? "null" : String.valueOf(x.args.number)));
-        printExpreListNode(x.args);
+        System.out.print(node.number + ": MethodDeclNode ===> " +
+            node.position.image + " " + ((node.dim == 0) ? "" : ("[" + node.dim + "] ")) +
+            node.name.image + " " + node.body.number);
+        printMethodBodyNode(node.body);
     }
 
-    // ------------------------- Comando de atribui??o -------------------
-    public void numberAtribNode(AtribNode x) {
-        if (x == null) {
+    
+    public void numberMethodBodyNode(MethodBodyNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr1);
-        numberExpreNode(x.expr2);
+        node.number = kk++;
+        numberVarDeclListNode(node.param);
+        numberStatementNode(node.stat);
     }
 
-    public void printAtribNode(AtribNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": AtribNode ===> " + x.expr1.number + " " +
-            x.expr2.number);
-        printExpreNode(x.expr1);
-        printExpreNode(x.expr2);
-    }
-
-    // ---------------------------------- comando if --------------------
-    public void numberIfNode(IfNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreNode(x.expr);
-        numberStatementNode(x.stat1);
-        numberStatementNode(x.stat2);
-    }
-
-    public void printIfNode(IfNode x) {
-        if (x == null) {
+    public void printMethodBodyNode(MethodBodyNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": IfNode ===> " + x.expr.number + " " +
-            x.stat1.number + " " +
-            ((x.stat2 == null) ? "null" : String.valueOf(x.stat2.number)));
-
-        printExpreNode(x.expr);
-        printStatementNode(x.stat1);
-        printStatementNode(x.stat2);
+        System.out.print(node.number + ": MethodBodyNode ===> " +
+            ((node.param == null) ? "null" : String.valueOf(node.param.number)) +
+            " " + node.stat.number);
+        printVarDeclListNode(node.param);
+        printStatementNode(node.stat);
     }
 
-    // ------------------------- comando for -----------------------
-    public void numberForNode(ForNode x) {
-        if (x == null) {
+    
+    public void numberBlockNode(BlockNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberAtribNode(x.init);
-        numberExpreNode(x.expr);
-        numberAtribNode(x.incr);
-        numberStatementNode(x.stat);
+        node.number = kk++;
+        numberStatementListNode(node.stats);
     }
 
-    public void printForNode(ForNode x) {
-        if (x == null) {
+    public void printBlockNode(BlockNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ForNode ===> " +
-            ((x.init == null) ? "null" : String.valueOf(x.init.number)) + " " +
-            ((x.expr == null) ? "null" : String.valueOf(x.expr.number)) + " " +
-            ((x.incr == null) ? "null" : String.valueOf(x.incr.number)) + " " +
-            x.stat.number);
-
-        printAtribNode(x.init);
-        printExpreNode(x.expr);
-        printAtribNode(x.incr);
-        printStatementNode(x.stat);
+        System.out.print(node.number + ": BlockNode ===> " + node.stats.number);
+        printStatementListNode(node.stats);
     }
 
-    // --------------------------- Comando break --------------------
-    public void numberBreakNode(BreakNode x) {
-        if (x == null) {
+    
+    public void numberStatementListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
+        node.number = kk++;
+        numberStatementNode((StatementNode) node.node);
+        numberStatementListNode(node.next);
     }
 
-    public void printBreakNode(BreakNode x) {
-        if (x == null) {
+    public void printStatementListNode(ListNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": BreakNode");
+        System.out.print(node.number + ": ListNode (StatementNode) ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
+
+        printStatementNode((StatementNode) node.node);
+        printStatementListNode(node.next);
     }
 
-    // --------------------------- Comando vazio -------------------
-    public void numberNopNode(NopNode x) {
-        if (x == null) {
+    
+    public void numberPrintNode(PrintNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
+        node.number = kk++;
+        numberExpreNode(node.expr);
     }
 
-    public void printNopNode(NopNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": NopNode");
-    }
-
-    // -------------------------- Aloca??o de objeto ------------------------
-    public void numberNewObjectNode(NewObjectNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreListNode(x.args);
-    }
-
-    public void printNewObjectNode(NewObjectNode x) {
-        if (x == null) {
+    public void printPrintNode(PrintNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": NewObjectNode ===> " + x.name.image +
-            " " + ((x.args == null) ? "null" : String.valueOf(x.args.number)));
-
-        printExpreListNode(x.args);
+        System.out.print(node.number + ": PrintNode ===> " + node.expr.number);
+        printExpreNode(node.expr);
     }
 
-    // -------------------------- Aloca??o de array ------------------------
-    public void numberNewArrayNode(NewArrayNode x) {
-        if (x == null) {
+    
+    public void numberReadNode(ReadNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreListNode(x.dims);
+        node.number = kk++;
+        numberExpreNode(node.expr);
     }
 
-    public void printNewArrayNode(NewArrayNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": NewArrayNode ===> " + x.name.image +
-            " " + ((x.dims == null) ? "null" : String.valueOf(x.dims.number)));
-
-        printExpreListNode(x.dims);
-    }
-
-    // --------------------------- Lista de express?es ---------------
-    public void numberExpreListNode(ListNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreNode((ExpreNode) x.node);
-        numberExpreListNode(x.next);
-    }
-
-    public void printExpreListNode(ListNode x) {
-        if (x == null) {
+    public void printReadNode(ReadNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": ListNode (ExpreNode) ===> " +
-            x.node.number + " " +
-            ((x.next == null) ? "null" : String.valueOf(x.next.number)));
-        printExpreNode((ExpreNode) x.node);
-        printExpreListNode(x.next);
+        System.out.print(node.number + ": ReadNode ===> " + node.expr.number);
+        printExpreNode(node.expr);
     }
 
-    // --------------------- Express?o relacional -------------------
-    public void numberRelationalNode(RelationalNode x) {
-        if (x == null) {
+    
+    public void numberReturnNode(ReturnNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr1);
-        numberExpreNode(x.expr2);
+        node.number = kk++;
+        numberExpreNode(node.expr);
     }
 
-    public void printRelationalNode(RelationalNode x) {
-        if (x == null) {
+    public void printReturnNode(ReturnNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": RelationalNode ===> " + x.expr1.number +
-            " " + x.position.image + " " + x.expr2.number);
-        printExpreNode(x.expr1);
-        printExpreNode(x.expr2);
+        System.out.print(node.number + ": ReturnNode ===> " +
+            ((node.expr == null) ? "null" : String.valueOf(node.expr.number)));
+        printExpreNode(node.expr);
     }
 
-    // ------------------------ Soma ou subtra??o  -------------------
-    public void numberAddNode(AddNode x) {
-        if (x == null) {
+    
+    public void numberSuperNode(SuperNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr1);
-        numberExpreNode(x.expr2);
+        node.number = kk++;
+        numberExpreListNode(node.args);
     }
 
-    public void printAddNode(AddNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": AddNode ===> " + x.expr1.number + " " +
-            x.position.image + " " + x.expr2.number);
-        printExpreNode(x.expr1);
-        printExpreNode(x.expr2);
-    }
-
-    // ---------------------- Multiplica??o ou divis?o --------------------
-    public void numberMultNode(MultNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreNode(x.expr1);
-        numberExpreNode(x.expr2);
-    }
-
-    public void printMultNode(MultNode x) {
-        if (x == null) {
+    public void printSuperNode(SuperNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": MultNode ===> " + x.expr1.number + " " +
-            x.position.image + " " + x.expr2.number);
-        printExpreNode(x.expr1);
-        printExpreNode(x.expr2);
+        System.out.print(node.number + ": SuperNode ===> " +
+            ((node.args == null) ? "null" : String.valueOf(node.args.number)));
+        printExpreListNode(node.args);
     }
 
-    // ------------------------- Express?o un?ria ------------------------
-    public void numberUnaryNode(UnaryNode x) {
-        if (x == null) {
+    
+    public void numberAtribNode(AtribNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr);
+        node.number = kk++;
+        numberExpreNode(node.expr1);
+        numberExpreNode(node.expr2);
     }
 
-    public void printUnaryNode(UnaryNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": UnaryNode ===> " + x.position.image +
-            " " + x.expr.number);
-        printExpreNode(x.expr);
-    }
-
-    // -------------------------- Constante inteira ----------------------
-    public void numberIntConstNode(IntConstNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-    }
-
-    public void printIntConstNode(IntConstNode x) {
-        if (x == null) {
+    public void printAtribNode(AtribNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": IntConstNode ===> " + x.position.image);
+        System.out.print(node.number + ": AtribNode ===> " + node.expr1.number + " " +
+            node.expr2.number);
+        printExpreNode(node.expr1);
+        printExpreNode(node.expr2);
     }
 
-    // ------------------------ Constante string ----------------------------
-    public void numberStringConstNode(StringConstNode x) {
-        if (x == null) {
+    
+    public void numberIfNode(IfNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
+        node.number = kk++;
+        numberExpreNode(node.expr);
+        numberStatementNode(node.stat1);
+        numberStatementNode(node.stat2);
     }
 
-    public void printStringConstNode(StringConstNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": StringConstNode ===> " +
-            x.position.image);
-    }
-
-    // ------------------------------ Constante null --------------------------
-    public void numberNullConstNode(NullConstNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-    }
-
-    public void printNullConstNode(NullConstNode x) {
-        if (x == null) {
+    public void printIfNode(IfNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": NullConstNode ===> " + x.position.image);
+        System.out.print(node.number + ": IfNode ===> " + node.expr.number + " " +
+            node.stat1.number + " " +
+            ((node.stat2 == null) ? "null" : String.valueOf(node.stat2.number)));
+
+        printExpreNode(node.expr);
+        printStatementNode(node.stat1);
+        printStatementNode(node.stat2);
     }
 
-    // -------------------------------- Nome de vari?vel ------------------
-    public void numberVarNode(VarNode x) {
-        if (x == null) {
+    
+    public void numberForNode(ForNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
+        node.number = kk++;
+        numberAtribNode(node.init);
+        numberExpreNode(node.expr);
+        numberAtribNode(node.incr);
+        numberStatementNode(node.stat);
     }
 
-    public void printVarNode(VarNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": VarNode ===> " + x.position.image + " " +
-            ((x.dim == 0) ? "" : ("[" + x.dim + "]")));
-    }
-
-    // ---------------------------- Chamada de m?todo ------------------------
-    public void numberCallNode(CallNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreNode(x.expr);
-        numberExpreListNode(x.args);
-    }
-
-    public void printCallNode(CallNode x) {
-        if (x == null) {
+    public void printForNode(ForNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": CallNode ===> " + x.expr.number + " " +
-            x.meth.image + " " +
-            ((x.args == null) ? "null" : String.valueOf(x.args.number)));
-        printExpreNode(x.expr);
-        printExpreListNode(x.args);
+        System.out.print(node.number + ": ForNode ===> " +
+            ((node.init == null) ? "null" : String.valueOf(node.init.number)) + " " +
+            ((node.expr == null) ? "null" : String.valueOf(node.expr.number)) + " " +
+            ((node.incr == null) ? "null" : String.valueOf(node.incr.number)) + " " +
+            node.stat.number);
+
+        printAtribNode(node.init);
+        printExpreNode(node.expr);
+        printAtribNode(node.incr);
+        printStatementNode(node.stat);
     }
 
-    // --------------------------- Indexa??o de vari?vel ---------------
-    public void numberIndexNode(IndexNode x) {
-        if (x == null) {
+    
+    public void numberBreakNode(BreakNode node) {
+        if (node == null) {
             return;
         }
 
-        x.number = kk++;
-        numberExpreNode(x.expr1);
-        numberExpreNode(x.expr2);
+        node.number = kk++;
     }
 
-    public void printIndexNode(IndexNode x) {
-        if (x == null) {
-            return;
-        }
-
-        System.out.println();
-        System.out.print(x.number + ": IndexNode ===> " + x.expr1.number + " " +
-            x.expr2.number);
-        printExpreNode(x.expr1);
-        printExpreNode(x.expr2);
-    }
-
-    // -------------------------- Acesso a campo de vari?vel ---------------
-    public void numberDotNode(DotNode x) {
-        if (x == null) {
-            return;
-        }
-
-        x.number = kk++;
-        numberExpreNode(x.expr);
-    }
-
-    public void printDotNode(DotNode x) {
-        if (x == null) {
+    public void printBreakNode(BreakNode node) {
+        if (node == null) {
             return;
         }
 
         System.out.println();
-        System.out.print(x.number + ": DotNode ===> " + x.expr.number + " " +
-            x.field.image);
-        printExpreNode(x.expr);
+        System.out.print(node.number + ": BreakNode");
     }
 
-    // --------------------------- Express?o em geral --------------------------
-    public void printExpreNode(ExpreNode x) {
-        if (x instanceof NewObjectNode) {
-            printNewObjectNode((NewObjectNode) x);
-        } else if (x instanceof NewArrayNode) {
-            printNewArrayNode((NewArrayNode) x);
-        } else if (x instanceof RelationalNode) {
-            printRelationalNode((RelationalNode) x);
-        } else if (x instanceof AddNode) {
-            printAddNode((AddNode) x);
-        } else if (x instanceof MultNode) {
-            printMultNode((MultNode) x);
-        } else if (x instanceof UnaryNode) {
-            printUnaryNode((UnaryNode) x);
-        } else if (x instanceof CallNode) {
-            printCallNode((CallNode) x);
-        } else if (x instanceof IntConstNode) {
-            printIntConstNode((IntConstNode) x);
-        } else if (x instanceof StringConstNode) {
-            printStringConstNode((StringConstNode) x);
-        } else if (x instanceof NullConstNode) {
-            printNullConstNode((NullConstNode) x);
-        } else if (x instanceof IndexNode) {
-            printIndexNode((IndexNode) x);
-        } else if (x instanceof DotNode) {
-            printDotNode((DotNode) x);
-        } else if (x instanceof VarNode) {
-            printVarNode((VarNode) x);
+    
+    public void numberNopNode(NopNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+    }
+
+    public void printNopNode(NopNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": NopNode");
+    }
+
+    
+    public void numberNewObjectNode(NewObjectNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreListNode(node.args);
+    }
+
+    public void printNewObjectNode(NewObjectNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": NewObjectNode ===> " + node.name.image +
+            " " + ((node.args == null) ? "null" : String.valueOf(node.args.number)));
+
+        printExpreListNode(node.args);
+    }
+
+    
+    public void numberNewArrayNode(NewArrayNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreListNode(node.dims);
+    }
+
+    public void printNewArrayNode(NewArrayNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": NewArrayNode ===> " + node.name.image +
+            " " + ((node.dims == null) ? "null" : String.valueOf(node.dims.number)));
+
+        printExpreListNode(node.dims);
+    }
+
+    
+    public void numberExpreListNode(ListNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode((ExpreNode) node.node);
+        numberExpreListNode(node.next);
+    }
+
+    public void printExpreListNode(ListNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": ListNode (ExpreNode) ===> " +
+            node.node.number + " " +
+            ((node.next == null) ? "null" : String.valueOf(node.next.number)));
+        printExpreNode((ExpreNode) node.node);
+        printExpreListNode(node.next);
+    }
+
+    
+    public void numberRelationalNode(RelationalNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr1);
+        numberExpreNode(node.expr2);
+    }
+
+    public void printRelationalNode(RelationalNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": RelationalNode ===> " + node.expr1.number +
+            " " + node.position.image + " " + node.expr2.number);
+        printExpreNode(node.expr1);
+        printExpreNode(node.expr2);
+    }
+
+    
+    public void numberAddNode(AddNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr1);
+        numberExpreNode(node.expr2);
+    }
+
+    public void printAddNode(AddNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": AddNode ===> " + node.expr1.number + " " +
+            node.position.image + " " + node.expr2.number);
+        printExpreNode(node.expr1);
+        printExpreNode(node.expr2);
+    }
+
+    
+    public void numberMultNode(MultNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr1);
+        numberExpreNode(node.expr2);
+    }
+
+    public void printMultNode(MultNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": MultNode ===> " + node.expr1.number + " " +
+            node.position.image + " " + node.expr2.number);
+        printExpreNode(node.expr1);
+        printExpreNode(node.expr2);
+    }
+
+    
+    public void numberUnaryNode(UnaryNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr);
+    }
+
+    public void printUnaryNode(UnaryNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": UnaryNode ===> " + node.position.image +
+            " " + node.expr.number);
+        printExpreNode(node.expr);
+    }
+
+    
+    public void numberIntConstNode(IntConstNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+    }
+
+    public void printIntConstNode(IntConstNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": IntConstNode ===> " + node.position.image);
+    }
+
+    
+    public void numberStringConstNode(StringConstNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+    }
+
+    public void printStringConstNode(StringConstNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": StringConstNode ===> " +
+            node.position.image);
+    }
+
+    
+    public void numberNullConstNode(NullConstNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+    }
+
+    public void printNullConstNode(NullConstNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": NullConstNode ===> " + node.position.image);
+    }
+
+    
+    public void numberVarNode(VarNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+    }
+
+    public void printVarNode(VarNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": VarNode ===> " + node.position.image + " " +
+            ((node.dim == 0) ? "" : ("[" + node.dim + "]")));
+    }
+
+    
+    public void numberCallNode(CallNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr);
+        numberExpreListNode(node.args);
+    }
+
+    public void printCallNode(CallNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": CallNode ===> " + node.expr.number + " " +
+            node.meth.image + " " +
+            ((node.args == null) ? "null" : String.valueOf(node.args.number)));
+        printExpreNode(node.expr);
+        printExpreListNode(node.args);
+    }
+
+    
+    public void numberIndexNode(IndexNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr1);
+        numberExpreNode(node.expr2);
+    }
+
+    public void printIndexNode(IndexNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": IndexNode ===> " + node.expr1.number + " " +
+            node.expr2.number);
+        printExpreNode(node.expr1);
+        printExpreNode(node.expr2);
+    }
+
+    
+    public void numberDotNode(DotNode node) {
+        if (node == null) {
+            return;
+        }
+
+        node.number = kk++;
+        numberExpreNode(node.expr);
+    }
+
+    public void printDotNode(DotNode node) {
+        if (node == null) {
+            return;
+        }
+
+        System.out.println();
+        System.out.print(node.number + ": DotNode ===> " + node.expr.number + " " +
+            node.field.image);
+        printExpreNode(node.expr);
+    }
+
+    
+    public void printExpreNode(ExpreNode node) {
+        if (node instanceof NewObjectNode) {
+            printNewObjectNode((NewObjectNode) node);
+        } else if (node instanceof NewArrayNode) {
+            printNewArrayNode((NewArrayNode) node);
+        } else if (node instanceof RelationalNode) {
+            printRelationalNode((RelationalNode) node);
+        } else if (node instanceof AddNode) {
+            printAddNode((AddNode) node);
+        } else if (node instanceof MultNode) {
+            printMultNode((MultNode) node);
+        } else if (node instanceof UnaryNode) {
+            printUnaryNode((UnaryNode) node);
+        } else if (node instanceof CallNode) {
+            printCallNode((CallNode) node);
+        } else if (node instanceof IntConstNode) {
+            printIntConstNode((IntConstNode) node);
+        } else if (node instanceof StringConstNode) {
+            printStringConstNode((StringConstNode) node);
+        } else if (node instanceof NullConstNode) {
+            printNullConstNode((NullConstNode) node);
+        } else if (node instanceof IndexNode) {
+            printIndexNode((IndexNode) node);
+        } else if (node instanceof DotNode) {
+            printDotNode((DotNode) node);
+        } else if (node instanceof VarNode) {
+            printVarNode((VarNode) node);
         }
     }
 
-    public void numberExpreNode(ExpreNode x) {
-        if (x instanceof NewObjectNode) {
-            numberNewObjectNode((NewObjectNode) x);
-        } else if (x instanceof NewArrayNode) {
-            numberNewArrayNode((NewArrayNode) x);
-        } else if (x instanceof RelationalNode) {
-            numberRelationalNode((RelationalNode) x);
-        } else if (x instanceof AddNode) {
-            numberAddNode((AddNode) x);
-        } else if (x instanceof MultNode) {
-            numberMultNode((MultNode) x);
-        } else if (x instanceof UnaryNode) {
-            numberUnaryNode((UnaryNode) x);
-        } else if (x instanceof CallNode) {
-            numberCallNode((CallNode) x);
-        } else if (x instanceof IntConstNode) {
-            numberIntConstNode((IntConstNode) x);
-        } else if (x instanceof StringConstNode) {
-            numberStringConstNode((StringConstNode) x);
-        } else if (x instanceof NullConstNode) {
-            numberNullConstNode((NullConstNode) x);
-        } else if (x instanceof IndexNode) {
-            numberIndexNode((IndexNode) x);
-        } else if (x instanceof DotNode) {
-            numberDotNode((DotNode) x);
-        } else if (x instanceof VarNode) {
-            numberVarNode((VarNode) x);
+    public void numberExpreNode(ExpreNode node) {
+        if (node instanceof NewObjectNode) {
+            numberNewObjectNode((NewObjectNode) node);
+        } else if (node instanceof NewArrayNode) {
+            numberNewArrayNode((NewArrayNode) node);
+        } else if (node instanceof RelationalNode) {
+            numberRelationalNode((RelationalNode) node);
+        } else if (node instanceof AddNode) {
+            numberAddNode((AddNode) node);
+        } else if (node instanceof MultNode) {
+            numberMultNode((MultNode) node);
+        } else if (node instanceof UnaryNode) {
+            numberUnaryNode((UnaryNode) node);
+        } else if (node instanceof CallNode) {
+            numberCallNode((CallNode) node);
+        } else if (node instanceof IntConstNode) {
+            numberIntConstNode((IntConstNode) node);
+        } else if (node instanceof StringConstNode) {
+            numberStringConstNode((StringConstNode) node);
+        } else if (node instanceof NullConstNode) {
+            numberNullConstNode((NullConstNode) node);
+        } else if (node instanceof IndexNode) {
+            numberIndexNode((IndexNode) node);
+        } else if (node instanceof DotNode) {
+            numberDotNode((DotNode) node);
+        } else if (node instanceof VarNode) {
+            numberVarNode((VarNode) node);
         }
     }
 
-    // --------------------------- Comando em geral -------------------
-    public void printStatementNode(StatementNode x) {
-        if (x instanceof BlockNode) {
-            printBlockNode((BlockNode) x);
-        } else if (x instanceof VarDeclNode) {
-            printVarDeclNode((VarDeclNode) x);
-        } else if (x instanceof AtribNode) {
-            printAtribNode((AtribNode) x);
-        } else if (x instanceof IfNode) {
-            printIfNode((IfNode) x);
-        } else if (x instanceof ForNode) {
-            printForNode((ForNode) x);
-        } else if (x instanceof PrintNode) {
-            printPrintNode((PrintNode) x);
-        } else if (x instanceof NopNode) {
-            printNopNode((NopNode) x);
-        } else if (x instanceof ReadNode) {
-            printReadNode((ReadNode) x);
-        } else if (x instanceof ReturnNode) {
-            printReturnNode((ReturnNode) x);
-        } else if (x instanceof SuperNode) {
-            printSuperNode((SuperNode) x);
-        } else if (x instanceof BreakNode) {
-            printBreakNode((BreakNode) x);
+    
+    public void printStatementNode(StatementNode node) {
+        if (node instanceof BlockNode) {
+            printBlockNode((BlockNode) node);
+        } else if (node instanceof VarDeclNode) {
+            printVarDeclNode((VarDeclNode) node);
+        } else if (node instanceof AtribNode) {
+            printAtribNode((AtribNode) node);
+        } else if (node instanceof IfNode) {
+            printIfNode((IfNode) node);
+        } else if (node instanceof ForNode) {
+            printForNode((ForNode) node);
+        } else if (node instanceof PrintNode) {
+            printPrintNode((PrintNode) node);
+        } else if (node instanceof NopNode) {
+            printNopNode((NopNode) node);
+        } else if (node instanceof ReadNode) {
+            printReadNode((ReadNode) node);
+        } else if (node instanceof ReturnNode) {
+            printReturnNode((ReturnNode) node);
+        } else if (node instanceof SuperNode) {
+            printSuperNode((SuperNode) node);
+        } else if (node instanceof BreakNode) {
+            printBreakNode((BreakNode) node);
         }
     }
 
-    public void numberStatementNode(StatementNode x) {
-        if (x instanceof BlockNode) {
-            numberBlockNode((BlockNode) x);
-        } else if (x instanceof VarDeclNode) {
-            numberVarDeclNode((VarDeclNode) x);
-        } else if (x instanceof AtribNode) {
-            numberAtribNode((AtribNode) x);
-        } else if (x instanceof IfNode) {
-            numberIfNode((IfNode) x);
-        } else if (x instanceof ForNode) {
-            numberForNode((ForNode) x);
-        } else if (x instanceof PrintNode) {
-            numberPrintNode((PrintNode) x);
-        } else if (x instanceof NopNode) {
-            numberNopNode((NopNode) x);
-        } else if (x instanceof ReadNode) {
-            numberReadNode((ReadNode) x);
-        } else if (x instanceof ReturnNode) {
-            numberReturnNode((ReturnNode) x);
-        } else if (x instanceof SuperNode) {
-            numberSuperNode((SuperNode) x);
-        } else if (x instanceof BreakNode) {
-            numberBreakNode((BreakNode) x);
+    public void numberStatementNode(StatementNode node) {
+        if (node instanceof BlockNode) {
+            numberBlockNode((BlockNode) node);
+        } else if (node instanceof VarDeclNode) {
+            numberVarDeclNode((VarDeclNode) node);
+        } else if (node instanceof AtribNode) {
+            numberAtribNode((AtribNode) node);
+        } else if (node instanceof IfNode) {
+            numberIfNode((IfNode) node);
+        } else if (node instanceof ForNode) {
+            numberForNode((ForNode) node);
+        } else if (node instanceof PrintNode) {
+            numberPrintNode((PrintNode) node);
+        } else if (node instanceof NopNode) {
+            numberNopNode((NopNode) node);
+        } else if (node instanceof ReadNode) {
+            numberReadNode((ReadNode) node);
+        } else if (node instanceof ReturnNode) {
+            numberReturnNode((ReturnNode) node);
+        } else if (node instanceof SuperNode) {
+            numberSuperNode((SuperNode) node);
+        } else if (node instanceof BreakNode) {
+            numberBreakNode((BreakNode) node);
         }
     }
 }

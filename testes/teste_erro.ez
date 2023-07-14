@@ -1,1 +1,117 @@
-class lalaland
+
+class TestePrincipal {
+    class Data {
+        int dia, mes, ano;
+
+        constructor(){
+            dia = 1;
+            mes = 1;
+            ano = 1;
+        }
+
+        constructor(int d, int m, int a){
+            dia = d;
+            mes = m;
+            ano = a;
+        }
+
+        int comparaDia(Data x){
+            if ( this.dia < x.dia) return -1;
+            if ( this.dia > x.dia) return 1;
+            return 0;
+        }
+
+        int comparaMes(Data x){
+            if ( this.mes < x.mes) return -1;
+            if ( this.mes > x.mes) return 1;
+            return 0;
+        }
+
+        int comparaAno(Data x){
+            if ( this.ano < x.ano) return -1;
+            if ( this.ano > x.ano) return 1;
+            return 0;
+        }
+    }
+
+    class Pessoa {
+        String nome;
+        Data nascimento;
+
+        constructor(){
+            nome = "";
+            nascimento = new Data();
+        }
+
+        constructor(String n, Data d){
+            nome = n;
+            nascimento = d;
+        }
+
+        void imprime(){
+            print "Nome: " + nome + "\n";
+            print "Data de nascimento: " + nascimento.dia + "/" + nascimento.mes + "/" + nascimento.ano + "\n";
+        }
+
+        int compara(Pessoa x){
+            int comparaAno = nascimento.comparaAno(x.nascimento);
+            int comparaMes = nascimento.comparaMes(x.nascimento);
+            int comparaDia = nascimento.comparaDia(x.nascimento);
+
+            if (comparaAno == 0 && comparaMes == 0 && comparaDia == 0) return 0;
+            if (comparaAno == 1) return 1;
+            if (comparaAno == -1) return -1;
+            if (comparaAno == 0 && comparaMes == 1) return 1;
+            if (comparaAno == 0 && comparaMes == -1) return -1;
+            if (comparaAno == 0 && comparaMes == 0 && comparaDia == 1) return 1;
+            if (comparaAno == 0 && comparaMes == 0 && comparaDia == -1) return -1;
+            return 0;
+        }
+    }
+
+    class Agenda {
+        Pessoa[] pessoas;
+        int qtdPessoas;
+
+        constructor(){
+            pessoas = new Pessoa[10];
+            qtdPessoas = 0;
+        }
+
+        void armazenaPessoa(String n, Data d, int i){
+            pessoas[i] = new Pessoa(n, d);
+            qtdPessoas++;
+        }
+
+        void removePessoa(String n){
+            for (int i = 0; i < qtdPessoas; i++){
+                if (pessoas[i].nome.equals(n)){
+                    for (int j = i; j < qtdPessoas; j++){
+                        pessoas[j] = pessoas[j+1];
+                    }
+                    qtdPessoas--;
+                }
+            }
+        }
+
+        int buscaPessoa(String n){
+            for (int i = 0; i < qtdPessoas; i++){
+                if (pessoas[i].nome.equals(n)){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        void imprimeAgenda(){
+            for (int i = 0; i < qtdPessoas; i++){
+                pessoas[i].imprime();
+            }
+        }
+
+        void imprimePessoa(int index){
+            pessoas[index].imprime();
+        }
+    }
+}
+

@@ -5,6 +5,12 @@ import java.io.*;
 import recovery.*;
                    // importa as classes de recuperação de erro do AS
 import syntacticTree.*;
+                        // importa as classes que representam a AST(abstract syntax tree)
+import semanalysis.*;
+                      // importa as classes que fazem a análise semantica
+import codegen.*;
+                  // importa as classes que fazem a geração de código
+import Ezrt.*;
 
 /** Token Manager. */
 @SuppressWarnings ("unused")

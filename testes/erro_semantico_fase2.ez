@@ -1,0 +1,26 @@
+class TesteFase2 {
+    class Data {
+        int dia;
+        int mes;
+        int ano;
+
+        constructor() {
+            this.dia = 10;
+            this.mes = 10;
+            this.ano = 2010;
+        }
+    
+        constructor(int dia, int mes, int ano) {
+            this.dia = dia;
+            this.mes = mes;
+            this.ano = ano;
+        }
+
+        // must show an error
+        constructor(int dia, int mes, int ano) {
+            this.dia = dia;
+            this.mes = mes;
+            this.ano = ano;
+        }
+    }
+}

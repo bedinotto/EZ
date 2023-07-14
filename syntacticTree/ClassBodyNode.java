@@ -11,7 +11,7 @@ public class ClassBodyNode extends GeneralNode {
 
     public ClassBodyNode(Token t1, ListNode c, ListNode v, ListNode ct,
         ListNode m) {
-        super(t1); // passa token de referencia para construtor da superclasse
+        super(t1);
         clist = c;
         vlist = v; 
         ctlist = ct;

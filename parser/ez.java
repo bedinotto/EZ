@@ -5,10 +5,13 @@ package parser;
 import java.io.*;
 import recovery.*; // importa as classes de recuperação de erro do AS
 import syntacticTree.*; // importa as classes que representam a AST(abstract syntax tree)
+import semanalysis.*; // importa as classes que fazem a análise semantica
+import codegen.*; // importa as classes que fazem a geração de código
+import Ezrt.*; // importa as classes que fazem a execução do código gerado
 
 public class ez implements ezConstants {
 
-    final static String Version = "Compilador EZ - 0.5";
+    final static String Version = "EZ Compiler - V1";
     int contParseError = 0; // contador de erros sintaticos
     boolean debug_recovery; // controla verbose de debug da recuperação de erros
     Token lastError = null; // ultimo token que gerou um erro
@@ -37,7 +40,7 @@ public class ez implements ezConstants {
             if ( args[i].equals("-print_tree") )
                 print_tree = true;
             else {
-                System.out.println("O uso deve ser: java ez [-debug_AS] [-debug_recovery] [-print_tree] inputfile");
+                System.out.println("Usage is: java ez [-debug_AS] [-debug_recovery] [-print_tree] inputfile");
                 System.exit(0);
             }
         }
@@ -45,18 +48,18 @@ public class ez implements ezConstants {
         if (args[i].equals("-")) {
 
             // le da entrada padrao
-            System.out.println("Lendo da entrada padrao . . .");
+            System.out.println("Reading from standard input . . .");
             parser = new ez(System.in); // cria AS
         } else {
 
             // le de arquivo
             filename = args[args.length-1];
-            System.out.println("Lendo de arquivo " + filename + " . . .");
+            System.out.println("Reading from file " + filename + " . . .");
             try {
                 parser = new ez(new java.io.FileInputStream(filename)); // cria AS
             }
             catch (java.io.FileNotFoundException e) {
-                System.out.println("Arquivo " + filename + " nao encontrado.");
+                System.out.println("File " + filename + " not found.");
                 return;
             }
         }
@@ -72,14 +75,48 @@ public class ez implements ezConstants {
             System.err.println(e.getMessage());
         }
         finally {
-            System.out.println(parser.token_source.foundLexError() + " erros lexicos encontrados.");
-            System.out.println(parser.contParseError + " erros sintaticos encontrados.");
+            System.out.println(parser.token_source.foundLexError() + " lexical errors found");
+            System.out.println(parser.contParseError + " syntactic errors found");
         }
 
-        if ( parser.token_source.foundLexError() + parser.contParseError == 0 && print_tree ) {
-            System.out.println("Impressao da arvore sintatica abstrata:");
-            PrintTree pt = new PrintTree();
-            pt.printRoot(root);
+        if ( parser.token_source.foundLexError() + parser.contParseError == 0) {
+            if ( print_tree ) {
+                PrintTree pt = new PrintTree();
+                pt.printRoot(root);
+            }
+            // fase 1
+            // ClassCheck analyzer = new ClassCheck();
+
+            // fase 2
+            // VarCheck analyzer = new VarCheck();
+
+            // fase 3
+            // TypeCheck analyzer = new TypeCheck();
+
+            // generate code
+            CodeGen analyzer = new CodeGen();
+            try {
+                // fase 1
+                // analyzer.ClassCheckRoot(root);
+
+                // fase 2
+                // analyzer.VarCheckRoot(root);
+
+                // fase 3
+                // analyzer.TypeCheckRoot(root);
+
+                // todas 3 fases semanticas
+                // System.out.println("0 erros semanticos encontrados.");
+
+                // generate code
+                analyzer.CodeGenRoot(root, filename);
+                System.out.println("Code generated successfully.");
+
+            } catch (SemanticException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e2) {
+                System.out.println(e2.getMessage());
+            }
         }
     } // fim do metodo main
 
@@ -104,8 +141,8 @@ public class ez implements ezConstants {
     void consumeUntil(RecoverySet g, ParseException e, String met) throws ParseEOFException, ParseException {
         Token tok;
         if ( debug_recovery ) {
-            System.out.println("*** Recuperando de erro sintatico no metodo " + met + " . . .");
-            System.out.println("    Conjunto de sincronizacao: " + g);
+            System.out.println("*** " + met + " ***");
+            System.out.println("     Syncronizing set: " + g);
         }
         if ( g == null) {
             throw e; // se conjunto de sincronização for nulo, propaga a exceção
@@ -115,11 +152,11 @@ public class ez implements ezConstants {
         while ( ! eofSeen ) {
             if ( g.contains(tok.kind) ) {
                 if ( debug_recovery )
-                    System.out.println("    Token sincronizador encontrado: " + im(tok.kind));
+                    System.out.println("     Found syncronizing token: " + im(tok.kind));
                     break;
             }
             if ( debug_recovery )
-                System.out.println("    Token ignorado: " + im(tok.kind));
+                System.out.println("     Ignoring token: " + im(tok.kind));
 
             getNextToken(); // consome o proximo token
             tok = getToken(1); // pega o token atual
@@ -133,7 +170,7 @@ public class ez implements ezConstants {
             contParseError++;
         }
         if ( eofSeen )
-            throw new ParseEOFException("Fim de arquivo inesperado.");
+            throw new ParseEOFException("End of file found before end of program.");
     }
 
 // #############################################################
@@ -1436,21 +1473,6 @@ l.add(e);
     finally { jj_save(3, xla); }
   }
 
-  private boolean jj_3_3()
- {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_scan_token(IDENT)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    return false;
-  }
-
-  private boolean jj_3_2()
- {
-    if (jj_scan_token(IDENT)) return true;
-    if (jj_scan_token(IDENT)) return true;
-    return false;
-  }
-
   private boolean jj_3_4()
  {
     if (jj_scan_token(IDENT)) return true;
@@ -1460,12 +1482,12 @@ l.add(e);
 
   private boolean jj_3_1()
  {
-    if (jj_3R_vardecl_499_1_16()) return true;
+    if (jj_3R_vardecl_536_1_16()) return true;
     if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
 
-  private boolean jj_3R_vardecl_499_1_16()
+  private boolean jj_3R_vardecl_536_1_16()
  {
     if (!jj_rescan) trace_call("vardecl(LOOKING AHEAD...)");
     Token xsp;
@@ -1480,24 +1502,39 @@ l.add(e);
     if (jj_scan_token(IDENT)) { if (!jj_rescan) trace_return("vardecl(LOOKAHEAD FAILED)"); return true; }
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_vardecl_501_19_17()) { jj_scanpos = xsp; break; }
+      if (jj_3R_vardecl_538_19_17()) { jj_scanpos = xsp; break; }
     }
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_vardecl_503_5_18()) { jj_scanpos = xsp; break; }
+      if (jj_3R_vardecl_540_5_18()) { jj_scanpos = xsp; break; }
     }
     { if (!jj_rescan) trace_return("vardecl(LOOKAHEAD SUCCEEDED)"); return false; }
   }
 
-  private boolean jj_3R_vardecl_501_19_17()
+  private boolean jj_3R_vardecl_538_19_17()
  {
     if (jj_scan_token(LBRACKET)) return true;
     return false;
   }
 
-  private boolean jj_3R_vardecl_503_5_18()
+  private boolean jj_3R_vardecl_540_5_18()
  {
     if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  private boolean jj_3_3()
+ {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(IDENT)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  private boolean jj_3_2()
+ {
+    if (jj_scan_token(IDENT)) return true;
+    if (jj_scan_token(IDENT)) return true;
     return false;
   }
 
